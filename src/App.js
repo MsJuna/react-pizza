@@ -9,18 +9,16 @@ import Basket from './pages/Basket';
 import './scss/app.scss';
 
 function App() {
-  
+
   return (
     <div className="wrapper">
       <Header />
       <div className="content">
-        <div className="container">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/basket" element={<Basket />} />
-            <Route path="*" element={<NoFound />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/basket" element={<Basket />} />
+          <Route path="*" element={<NoFound />} />
+        </Routes>
       </div>
     </div>
   );
