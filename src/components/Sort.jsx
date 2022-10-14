@@ -2,6 +2,7 @@ import React from "react";
 
 function Sort({ value, voidSort }) {
   const [isVisible, setIsVisible] = React.useState(false);
+  const inputRef = React.useRef();
 
   const listSort = [
     { name: "популярности (по возрастанию)", sortProperty: "rating", order: "asc" },
@@ -12,13 +13,27 @@ function Sort({ value, voidSort }) {
     { name: "алфавиту (по убыванию)", sortProperty: "title", order: "desc" },
   ];
 
-  const test = (i) => {
+  const onClickChoiceSort = (i) => {
     voidSort(i);
     setIsVisible(false);
   };
 
+  React.useEffect(() => {
+    const handleClickPopup = (e) => {
+      if (!e.path.includes(inputRef.current)) {
+        setIsVisible(false);
+      }
+    };
+
+    document.body.addEventListener("click", handleClickPopup);
+
+    return () => {
+      document.body.removeEventListener("click", handleClickPopup);
+    };
+  }, []);
+
   return (
-    <div className='sort'>
+    <div ref={inputRef} className='sort'>
       <div className='sort__label'>
         <svg
           width='10'
@@ -43,7 +58,7 @@ function Sort({ value, voidSort }) {
                 <li
                   key={index}
                   className={value.name === obj.name ? "active" : ""}
-                  onClick={() => test(obj)}
+                  onClick={() => onClickChoiceSort(obj)}
                 >
                   {obj.name}
                 </li>
